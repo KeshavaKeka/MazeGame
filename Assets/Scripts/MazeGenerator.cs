@@ -20,7 +20,7 @@ public class MazeGenerator : MonoBehaviour
     void Start()
     {
         GenerateMaze();
-        SpawnEnemies(6,5.0f);
+        SpawnEnemies(4,5.0f);
         surface = GameObject.Find("NavMesh").GetComponent<NavMeshSurface>();
         if (surface != null)
         {
@@ -123,32 +123,6 @@ public class MazeGenerator : MonoBehaviour
                (y < height - 1 && maze[x, y + 1] == 1);
     }
 
-    //void SpawnEnemies(int count)
-    //{
-    //    List<Vector2Int> openPositions = new List<Vector2Int>();
-    //    for (int x = 0; x < width; x++)
-    //    {
-    //        for (int y = 2; y < height - 2; y++)
-    //        {
-    //            if (maze[x, y] == 0)
-    //            {
-    //                openPositions.Add(new Vector2Int(x, y));
-    //            }
-    //        }
-    //    }
-    //    for (int i = 0; i < count; i++)
-    //    {
-    //        if (openPositions.Count == 0) break;
-
-    //        int index = Random.Range(0, openPositions.Count);
-    //        Vector2Int pos = openPositions[index];
-    //        openPositions.RemoveAt(index);
-
-    //        Vector3 spawnPos = new Vector3(pos.x - width / 2f + 0.5f, 0.85f, pos.y - height / 2f + 1);
-    //        Instantiate(enemy, spawnPos, Quaternion.identity, transform);
-    //    }
-    //}
-
     void SpawnEnemies(int count, float minDistance)
     {
         List<Vector2Int> openPositions = new List<Vector2Int>();
@@ -156,7 +130,7 @@ public class MazeGenerator : MonoBehaviour
 
         for (int x = 0; x < width; x++)
         {
-            for (int y = 2; y < height - 2; y++)
+            for (int y = 6; y < height - 2; y++)
             {
                 if (maze[x, y] == 0)
                 {

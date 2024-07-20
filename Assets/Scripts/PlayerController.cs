@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour
 
     public NavMeshAgent agent;
 
+    public bool canMove = true;
+
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && canMove)
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
