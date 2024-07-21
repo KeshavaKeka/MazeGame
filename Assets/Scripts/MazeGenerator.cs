@@ -20,7 +20,7 @@ public class MazeGenerator : MonoBehaviour
     void Start()
     {
         GenerateMaze();
-        SpawnEnemies(4,5.0f);
+        SpawnEnemies(5,8f);
         surface = GameObject.Find("NavMesh").GetComponent<NavMeshSurface>();
         if (surface != null)
         {
