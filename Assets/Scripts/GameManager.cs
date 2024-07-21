@@ -65,11 +65,6 @@ public class GameManager : MonoBehaviour
             pause.gameObject.SetActive(false);
             timerText.gameObject.SetActive(false);
             gameover.gameObject.SetActive(true);
-            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-            foreach (GameObject enemy in enemies)
-            {
-                Destroy(enemy);
-            }
         }
     }
 
