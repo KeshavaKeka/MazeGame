@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 8931847142463367505}
   m_Layer: 6
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,13 +157,14 @@ MonoBehaviour:
   playerAgent: {fileID: 0}
   pla: {fileID: 0}
   torchLight: {fileID: 1169644313207712607}
-  detectionRadius: 7
+  detectionRadius: 6
   closeDetectionRadius: 2
   chaseSpeed: 4
   wanderSpeed: 4
   wanderRadius: 5
   chaseDuration: 5
   checkRate: 0.5
+  gameManager: {fileID: 0}
 --- !u!195 &8931847142463367505
 NavMeshAgent:
   m_ObjectHideFlags: 0

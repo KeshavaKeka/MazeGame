@@ -16,15 +16,18 @@ public class EnemyAI : MonoBehaviour
     public float wanderRadius = 5f; // Radius within which the enemy will wander
     public float chaseDuration = 5f; // How long the enemy will chase the player after losing sight
     public float checkRate = 0.5f; // How frequently to check for the player
-
+    public GameManager gameManager;
     private NavMeshAgent navAgent;
     private Vector3 startPosition;
     private float lastCheckTime;
     private float lastSightTime;
     private bool isChasing;
+    private float zLowerLimit = -10;
+    private float zUpperLimit = 13;
 
     void Start()
     {
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         pla = GameObject.Find("Player");
         playerAgent = GameObject.Find("Player").GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
@@ -76,6 +79,8 @@ public class EnemyAI : MonoBehaviour
                         lastSightTime = Time.time;
                         playerAgent.SetDestination(pla.transform.position);
                         script.canMove = false;
+                        gameManager.isActive = false;
+                        gameManager.GameOver();
                         StopCoroutine(Wander());
                     }
                 }
@@ -104,7 +109,11 @@ public class EnemyAI : MonoBehaviour
         while (!isChasing)
         {
             navAgent.speed = wanderSpeed;
-            Vector3 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
+            Vector3 newPos;
+            do
+            {
+                newPos = RandomNavSphere(startPosition, wanderRadius, -1);
+            } while (newPos.z > zUpperLimit || newPos.z < zLowerLimit);
             navAgent.SetDestination(newPos);
             yield return new WaitForSeconds(Random.Range(3, 7));
         }
