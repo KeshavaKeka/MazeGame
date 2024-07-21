@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isActive = true;
-        elapsedTime = 121;
+        elapsedTime = 181;
         minutes = Mathf.FloorToInt(elapsedTime / 60);
         seconds = Mathf.FloorToInt(elapsedTime % 60);
         timerText.text = "Time Left :" + string.Format(" {0:00}:{1:00}", minutes, seconds);

@@ -14,8 +14,11 @@ public class PlayerController : MonoBehaviour
 
     public GameManager gameManager;
 
+    public Animator anim;
+
     private void Start()
     {
+        anim = GameObject.Find("PlayerCharacter").GetComponent<Animator>();
         Inst.gameObject.SetActive(true);
     }
 
@@ -33,7 +36,17 @@ public class PlayerController : MonoBehaviour
                 agent.SetDestination(hit.point);
             }
         }
-        if(transform.position.z >13)
+
+        if (agent.velocity.sqrMagnitude > 0.1f)
+        {
+            anim.SetBool("IsWalking", true);
+        }
+        else
+        {
+            anim.SetBool("IsWalking", false);
+        }
+
+        if (transform.position.z >13)
         {
             gameManager.GameOver();
         }
