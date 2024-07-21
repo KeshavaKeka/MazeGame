@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public bool canMove = true;
 
-    public TextMeshProUGUI Inst;
+    public GameObject Inst;
 
     public GameManager gameManager;
 
