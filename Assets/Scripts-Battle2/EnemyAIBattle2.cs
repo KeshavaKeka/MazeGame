@@ -2,9 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAIBattle2 : MonoBehaviour
 {
-    private PlayerController script;
+    private PlayerControllerBattle2 script;
     private Transform player;
     public NavMeshAgent playerAgent;
     public GameObject pla;
@@ -16,7 +16,7 @@ public class EnemyAI : MonoBehaviour
     public float wanderRadius = 5f; // Radius within which the enemy will wander
     public float chaseDuration = 5f; // How long the enemy will chase the player after losing sight
     public float checkRate = 0.5f; // How frequently to check for the player
-    public GameManager gameManager;
+    public GameManagerBattle2 gameManager;
     private NavMeshAgent navAgent;
     private Vector3 startPosition;
     private float lastCheckTime;
@@ -24,16 +24,19 @@ public class EnemyAI : MonoBehaviour
     private bool isChasing;
     private float zLowerLimit = -10;
     private float zUpperLimit = 13;
+    private Animator anim;
 
     void Start()
     {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        anim = GameObject.Find("Idle").GetComponent<Animator>();
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManagerBattle2>();
         pla = GameObject.Find("Player");
         playerAgent = GameObject.Find("Player").GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
-        script = GameObject.Find("Player").GetComponent<PlayerController>();
+        script = GameObject.Find("Player").GetComponent<PlayerControllerBattle2>();
         navAgent = GetComponent<NavMeshAgent>();
         startPosition = transform.position;
+        anim.SetBool("walking", false);
         StartCoroutine(Wander());
     }
 
@@ -53,6 +56,7 @@ public class EnemyAI : MonoBehaviour
             if (Time.time > lastSightTime + chaseDuration)
             {
                 isChasing = false;
+                anim.SetBool("walking", false);
                 StartCoroutine(Wander());
             }
         }
@@ -114,8 +118,9 @@ public class EnemyAI : MonoBehaviour
             {
                 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
             } while (newPos.z > zUpperLimit || newPos.z < zLowerLimit);
+            anim.SetBool("walking", true);
             navAgent.SetDestination(newPos);
-            yield return new WaitForSeconds(Random.Range(3, 7));
+            yield return new WaitForSeconds(2);
         }
     }
 

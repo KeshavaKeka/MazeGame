@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class GameManager : MonoBehaviour
+public class GameManagerBattle2 : MonoBehaviour
 {
     public TextMeshProUGUI timerText;
     float elapsedTime;
@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         isActive = true;
-        elapsedTime = 181;
+        elapsedTime = 121;
         minutes = Mathf.FloorToInt(elapsedTime / 60);
         seconds = Mathf.FloorToInt(elapsedTime % 60);
-        timerText.text = "Time Left :" + string.Format(" {0:00}:{1:00}", minutes, seconds);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     private void Update()
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     {
         minutes = Mathf.FloorToInt(elapsedTime / 60);
         seconds = Mathf.FloorToInt(elapsedTime % 60);
-        timerText.text = "Time Left :" + string.Format(" {0:00}:{1:00}", minutes, seconds);
+        timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void GameOver()

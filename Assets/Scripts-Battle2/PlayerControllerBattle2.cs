@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 
-public class PlayerController : MonoBehaviour
+public class PlayerControllerBattle2 : MonoBehaviour
 {
     public Camera cam;
 
@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     public GameObject Inst;
 
-    public GameManager gameManager;
+    public GameManagerBattle2 gameManager;
 
     public Animator anim;
     public Animator anim1;
