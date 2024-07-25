@@ -24,19 +24,27 @@ public class GameManagerBattle2 : MonoBehaviour
         minutes = Mathf.FloorToInt(elapsedTime / 60);
         seconds = Mathf.FloorToInt(elapsedTime % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+        // Ensure buttons are set correctly at the start
+        pause.onClick.AddListener(Pause);
+        resume.onClick.AddListener(Resume);
+        resume.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        elapsedTime -= Time.deltaTime;
-        if(elapsedTime > 0)
+        if (isActive)
         {
-            CDown(elapsedTime);
-        }
-        else
-        {
-            isActive = false;
-            GameOver();
+            elapsedTime -= Time.deltaTime;
+            if (elapsedTime > 0)
+            {
+                CDown(elapsedTime);
+            }
+            else
+            {
+                isActive = false;
+                GameOver();
+            }
         }
     }
 
@@ -49,10 +57,11 @@ public class GameManagerBattle2 : MonoBehaviour
 
     public void GameOver()
     {
-        if(isActive)
+        pause.gameObject.SetActive(false);
+        timerText.gameObject.SetActive(false);
+
+        if (isActive)
         {
-            pause.gameObject.SetActive(false);
-            timerText.gameObject.SetActive(false);
             levelCompleted.gameObject.SetActive(true);
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject enemy in enemies)
@@ -62,23 +71,37 @@ public class GameManagerBattle2 : MonoBehaviour
         }
         else
         {
-            pause.gameObject.SetActive(false);
-            timerText.gameObject.SetActive(false);
             gameover.gameObject.SetActive(true);
         }
     }
 
     public void Pause()
     {
+        Debug.Log("Pause button clicked.");
         pause.gameObject.SetActive(false);
         resume.gameObject.SetActive(true);
         Time.timeScale = 0;
+
+        // Ensure NavMeshAgents are paused if necessary
+        UnityEngine.AI.NavMeshAgent[] agents = FindObjectsOfType<UnityEngine.AI.NavMeshAgent>();
+        foreach (UnityEngine.AI.NavMeshAgent agent in agents)
+        {
+            agent.isStopped = true;
+        }
     }
 
     public void Resume()
     {
+        Debug.Log("Resume button clicked.");
         pause.gameObject.SetActive(true);
         resume.gameObject.SetActive(false);
         Time.timeScale = 1;
+
+        // Resume NavMeshAgents if they were paused
+        UnityEngine.AI.NavMeshAgent[] agents = FindObjectsOfType<UnityEngine.AI.NavMeshAgent>();
+        foreach (UnityEngine.AI.NavMeshAgent agent in agents)
+        {
+            agent.isStopped = false;
+        }
     }
 }

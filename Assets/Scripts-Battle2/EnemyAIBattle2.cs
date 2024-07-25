@@ -22,8 +22,10 @@ public class EnemyAIBattle2 : MonoBehaviour
     private float lastCheckTime;
     private float lastSightTime;
     private bool isChasing;
-    private float zLowerLimit = -10;
-    private float zUpperLimit = 13;
+    private float zLowerLimit = -18; // Update z lower limit
+    private float zUpperLimit = 22;  // Update z upper limit
+    private float xLowerLimit = -14; // Add x lower limit
+    private float xUpperLimit = 14;  // Add x upper limit
     private Animator anim;
 
     void Start()
@@ -117,7 +119,7 @@ public class EnemyAIBattle2 : MonoBehaviour
             do
             {
                 newPos = RandomNavSphere(startPosition, wanderRadius, -1);
-            } while (newPos.z > zUpperLimit || newPos.z < zLowerLimit);
+            } while (newPos.z > zUpperLimit || newPos.z < zLowerLimit || newPos.x > xUpperLimit || newPos.x < xLowerLimit);
             anim.SetBool("walking", true);
             navAgent.SetDestination(newPos);
             yield return new WaitForSeconds(2);
